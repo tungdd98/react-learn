@@ -30,10 +30,35 @@ export const receivePosts = (subreddit, json) => ({
 });
 
 export const fetchPosts = (subreddit) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(requestPosts(subreddit));
-        return fetch(`https://www.reddit.com/r/${subreddit}.json`)
-            .then((response) => response.json())
-            .then((json) => dispatch(receivePosts(subreddit, json)));
+        try {
+            const response = await fetch(
+                `https://www.reddit.com/r/${subreddit}.json`
+            );
+            const json = await response.json();
+            return dispatch(receivePosts(subreddit, json));
+        } catch (error) {
+            return error;
+        }
+    };
+};
+
+const shouldFetchPosts = (state, subreddit) => {
+    const posts = state.postsBySubreddit[subreddit];
+    if (!posts) {
+        return true;
+    } else if (posts.isFetching) {
+        return false;
+    } else {
+        return posts.didInvalidate;
+    }
+};
+
+export const fetchPostsIfNeeded = (subreddit) => {
+    return (dispatch, getState) => {
+        if (shouldFetchPosts(getState(), subreddit)) {
+            return dispatch(fetchPosts(subreddit));
+        }
     };
 };

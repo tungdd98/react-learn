@@ -1,27 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import App from "./App";
 import "./assets/main.css";
 import * as serviceWorker from "./serviceWorker";
-import thunkMiddleware from "redux-thunk";
-import { createLogger } from "redux-logger";
-import { createStore, applyMiddleware } from "redux";
-import { selectSubreddit, fetchPosts } from "./reddit/actions";
-import reddit from "./reddit/reducers";
+import configureStore from "./reddit";
 
-const loggerMiddleware = createLogger();
-const store = createStore(
-    reddit,
-    applyMiddleware(thunkMiddleware, loggerMiddleware)
-);
-
-store.dispatch(selectSubreddit("reactjs"));
-store.dispatch(fetchPosts("reactjs")).then(() => console.log(store.getState()));
+const store = configureStore();
+console.log(store.getState());
 
 ReactDOM.render(
-    <React.StrictMode>
+    <Provider store={store}>
         <App />
-    </React.StrictMode>,
+    </Provider>,
     document.getElementById("root")
 );
 
