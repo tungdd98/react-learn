@@ -1,0 +1,9 @@
+.todoList {
+    max-width: 300px;
+    min-width: 300px;
+}
+.todo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
