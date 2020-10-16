@@ -1,5 +1,5 @@
 import React from "react";
-// import propTypes from "prop-types";
+import propTypes from "prop-types";
 
 const Picker = ({ value, onChange, options }) => (
     <span>
@@ -14,10 +14,10 @@ const Picker = ({ value, onChange, options }) => (
     </span>
 );
 
-// Picker.propTypes = {
-//     value: propTypes.string.isRequired,
-//     onChange: propTypes.func.isRequired,
-//     options: propTypes.arrayOf(propTypes.string.isRequired).isRequired,
-// };
+Picker.propTypes = {
+    value: propTypes.string.isRequired,
+    onChange: propTypes.func.isRequired,
+    options: propTypes.arrayOf(propTypes.string.isRequired).isRequired,
+};
 
 export default Picker;

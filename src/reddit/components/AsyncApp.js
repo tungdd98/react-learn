@@ -1,6 +1,6 @@
 // useEffect = componentDidMount + componentDidUpdate
 import React, { useEffect } from "react";
-// import propTypes from "prop-types";
+import propTypes from "prop-types";
 import { connect } from "react-redux";
 import {
     selectSubreddit,
@@ -56,6 +56,14 @@ const AsyncApp = ({
             )}
         </div>
     );
+};
+
+AsyncApp.propTypes = {
+    selectedSubreddit: propTypes.string.isRequired,
+    posts: propTypes.array.isRequired,
+    isFetching: propTypes.bool.isRequired,
+    lastUpdated: propTypes.number.isRequired,
+    dispatch: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
