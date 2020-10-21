@@ -1,0 +1,12 @@
+.boxColor {
+    $box-size: 200px;
+    $box-radius: 10px;
+
+    display: inline-block;
+    width: $box-size;
+    height: $box-size;
+    border-radius: $box-radius;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

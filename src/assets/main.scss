@@ -1,0 +1,59 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+}
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+input,
+select,
+button {
+    font-family: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 300;
+}
+button {
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 0.525rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #f7fafc;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #f7fafc;
+    font-size: 0.875rem;
+    position: relative;
+    transition: all 0.15s ease;
+    letter-spacing: 0.025em;
+    text-transform: none;
+    will-change: transform;
+    &:focus {
+        outline: none;
+    }
+}
+input {
+    font-size: 0.875rem;
+    display: block;
+    width: 100%;
+    padding: 0.525rem 0.75rem;
+    transition: all 0.15s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    color: #8898aa;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    border: 0;
+    box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
+    &:focus {
+        outline: none;
+    }
+}
