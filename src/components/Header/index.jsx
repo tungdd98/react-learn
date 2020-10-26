@@ -5,7 +5,9 @@ import style from "./Header.module.scss";
 
 const Header = () => {
     return (
-        <header className={`${style.header} sticky-top py-2`}>
+        <header
+            className={`${style.header} sticky-top py-2 bg-white shadow-sm`}
+        >
             <Container>
                 <Row className="justify-content-between align-items-center">
                     <Col xs="auto">
