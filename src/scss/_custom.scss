@@ -1,0 +1,58 @@
+$fontSizes: (12, 14, 17, 18);
+@each $size in $fontSizes {
+    .font-#{$size} {
+        font-size: #{$size}px;
+    }
+}
+$fontWeights: (400, 500, 600, 700);
+@each $weight in $fontWeights {
+    .font-weight-#{$weight} {
+        font-weight: #{$weight};
+    }
+}
+ul {
+    @extend .list-unstyled;
+    margin: 0;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+header {
+    padding-top: 25%;
+    background: url(../assets/banner.jpeg) center no-repeat;
+    background-size: cover;
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    .header-top {
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+    .header-content {
+        max-width: 650px;
+        width: 100%;
+    }
+    .header-search {
+        input {
+            height: auto;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+}
+.w-nav {
+    li.active {
+        border-bottom: 3px solid $primary;
+        color: $primary;
+    }
+}
