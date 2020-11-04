@@ -1,10 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { Label, FormGroup } from "reactstrap";
+import { Label, FormGroup, FormFeedback } from "reactstrap";
+import { ErrorMessage } from "formik";
 
 const SelectField = (props) => {
     const { field, form, placeholder, label, options } = props;
+    const selectedOption = options.find(
+        (option) => option.value === field.value
+    );
+    const showError = form.errors[field.name] && form.touched[field.name];
     const handleSelectChange = (selected) => {
         const selectedValue = selected ? selected.value : selected;
 
@@ -20,12 +25,15 @@ const SelectField = (props) => {
         <FormGroup>
             {label && <Label for={field.name}>{label}</Label>}
             <Select
-                {...field}
                 id={field.name}
+                {...field}
+                value={selectedOption}
                 placeholder={placeholder}
                 options={options}
                 onChange={handleSelectChange}
+                className={showError && "is-invalid"}
             ></Select>
+            <ErrorMessage name={field.name} component={FormFeedback} />
         </FormGroup>
     );
 };

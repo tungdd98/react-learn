@@ -1,24 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Label, FormGroup, Button } from "reactstrap";
-import Select from "react-select";
+import { FormGroup, Button, Spinner } from "reactstrap";
 import { Formik, Form, FastField } from "formik";
-import { CATEGORIES, IMAGES } from "utils/constants";
+import { CATEGORIES } from "utils/constants";
 import InputField from "custom-fields/InputField";
 import SelectField from "custom-fields/SelectField";
+import RandomPhotoField from "custom-fields/RandomPhotoField";
+import * as Yup from "yup";
 import style from "./PhotoForm.module.scss";
 
+const AddPhotoSchema = Yup.object().shape({
+    title: Yup.string().required(),
+    category: Yup.number().required().nullable(),
+    photo: Yup.string().when("category", {
+        is: 1,
+        then: Yup.string().required(),
+        otherwise: Yup.string().notRequired(),
+    }),
+});
+
 const PhotoForm = (props) => {
-    const { onSubmit } = props;
-    const initialValues = {
-        title: "",
-    };
+    const { onSubmit, initialValues, isEdit } = props;
     return (
         <div className={`mx-auto my-3 ${style.photoForm}`}>
-            <Formik initialValues={initialValues}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={AddPhotoSchema}
+            >
                 {(formikProps) => {
-                    const { value, errors, touched } = formikProps;
-                    console.log({ value, errors, touched });
+                    const { isSubmitting } = formikProps;
                     return (
                         <Form>
                             <FastField
@@ -34,26 +45,19 @@ const PhotoForm = (props) => {
                                 placeholder="What's your photo category?"
                                 options={CATEGORIES}
                             />
-                            <FormGroup>
-                                <Label for="category">Photo</Label>
-                                <div>
-                                    <Button outline color="info" size="sm">
-                                        Random a photo
-                                    </Button>
-                                </div>
-                                <div
-                                    className={`overflow-hidden rounded shadow-sm my-2 ${style.photoImage}`}
-                                >
-                                    <img
-                                        src={IMAGES.orangeBg}
-                                        alt="color"
-                                        className="img-fluid"
-                                    />
-                                </div>
-                            </FormGroup>
+                            <FastField
+                                name="photo"
+                                component={RandomPhotoField}
+                                label="Photo"
+                            />
                             <FormGroup className="text-center">
-                                <Button color="info" size="sm" type="submit">
-                                    Add a album
+                                <Button
+                                    color={!isEdit ? "info" : "danger"}
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting && <Spinner size="sm" />}
+                                    {!isEdit ? "Add new photo" : "Update photo"}
                                 </Button>
                             </FormGroup>
                         </Form>
