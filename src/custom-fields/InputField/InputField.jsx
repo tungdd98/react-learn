@@ -8,7 +8,11 @@ const InputField = (props) => {
     const showError = form.errors[field.name] && form.touched[field.name];
     return (
         <FormGroup>
-            {label && <Label for={field.name}>{label}</Label>}
+            {label && (
+                <Label for={field.name} className="font-weight-600">
+                    {label}
+                </Label>
+            )}
             <Input
                 {...field}
                 type={type}

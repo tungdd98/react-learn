@@ -100,4 +100,13 @@ const cats = [
     "https://cdn.pixabay.com/photo/2017/02/23/16/26/cat-2092580__480.jpg",
 ];
 
-export { cats };
+const CATEGORIES = [
+    { label: "Wood wall", value: 1 },
+    { label: "Person", value: 2 },
+    { label: "Nature", value: 3 },
+    { label: "Animals", value: 4 },
+    { label: "Foods", value: 5 },
+    { label: "Teacher", value: 6 },
+];
+
+export { cats, CATEGORIES };

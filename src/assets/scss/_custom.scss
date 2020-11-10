@@ -31,24 +31,30 @@ a {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.absolute-fluid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
 header {
-    background: url(../images/banner.jpeg) center no-repeat;
-    background-size: cover;
-    min-height: 500px;
+    min-height: 60px;
     .logo {
         width: 40px;
         height: 40px;
     }
-    .header-top {
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-    .header-content {
+}
+.banner {
+    min-height: 500px;
+    position: relative;
+    background: url(../images/banner.jpeg) center no-repeat;
+    background-size: cover;
+    &__content {
         max-width: 650px;
         width: 100%;
     }
-    .header-search {
+    &__search {
         input {
             height: auto;
             padding-top: 1rem;
@@ -102,4 +108,10 @@ header {
     &:hover &__content {
         opacity: 1;
     }
+}
+.upload {
+    max-width: 40rem;
+}
+.list-circle {
+    list-style: circle;
 }

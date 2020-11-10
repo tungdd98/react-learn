@@ -1,14 +1,26 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+} from "react-router-dom";
 
-import App from "./App";
+import DefaultLayout from "layouts/Default";
+import AuthLayout from "layouts/Auth";
 
-import * as serviceWorker from "./serviceWorker";
-import "./App.scss";
+import "./assets/scss/main.scss";
 
-ReactDOM.render(<App />, document.getElementById("root"));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+    <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+                <Route path="/admin" component={DefaultLayout}></Route>
+                <Route path="/auth" component={AuthLayout}></Route>
+                <Redirect from="/" to="/admin/photos"></Redirect>
+            </Switch>
+        </Suspense>
+    </Router>,
+    document.getElementById("root")
+);

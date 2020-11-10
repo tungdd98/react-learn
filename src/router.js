@@ -2,15 +2,14 @@ import React from "react";
 
 const routes = [
     {
-        exact: true,
         path: "/photos",
-        component: React.lazy(() => import("./features/Photo")),
-        layout: "Default",
+        component: React.lazy(() => import("./features/Photo/Photo")),
+        layout: "/admin",
     },
     {
         path: "/login",
-        component: React.lazy(() => import("./features/Login")),
-        layout: "Auth",
+        component: React.lazy(() => import("./features/Login/Login")),
+        layout: "/auth",
     },
 ];
 
