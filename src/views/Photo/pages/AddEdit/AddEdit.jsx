@@ -4,19 +4,31 @@ import { Form, Formik, FastField } from "formik";
 import * as Yup from "yup";
 import InputField from "custom-fields/InputField/InputField";
 import SelectField from "custom-fields/SelectField/SelectField";
-import { CATEGORIES } from "utils/constants";
+import RandomPhotoField from "custom-fields/RandomPhotoField/RandomPhotoField";
+import { CATEGORIES, SIZES } from "utils/constants";
+import PhotoApi from "apis/photoApi";
+import { useHistory } from "react-router-dom";
 
 const schema = Yup.object().shape({
     title: Yup.string().required(),
-    categoryId: Yup.number().required(),
+    categoryId: Yup.number().required().nullable(),
+    imageUrl: Yup.string().required(),
 });
 
 const PhotoAddEdit = () => {
+    const history = useHistory();
     const [initialValues] = useState(() => ({
         title: "",
         categoryId: null,
+        size: "200/300",
         imageUrl: "",
     }));
+    const handleSubmit = async (data) => {
+        const res = await PhotoApi.uploadPhoto(data);
+        if (res) {
+            history.push("/admin/photos");
+        }
+    };
     return (
         <div className="min-vh-100 d-flex flex-column">
             <Header showBg={true} />
@@ -39,9 +51,16 @@ const PhotoAddEdit = () => {
                 </ul>
             </div>
             <div className="flex-grow-1 d-flex flex-column">
-                <Formik initialValues={initialValues} validationSchema={schema}>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={schema}
+                    onSubmit={handleSubmit}
+                >
                     {(formikProps) => {
-                        console.log(formikProps);
+                        const { size } = formikProps.values;
+                        const options = {
+                            size,
+                        };
                         return (
                             <Form className="flex-grow-1 d-flex flex-column">
                                 <div className="upload mx-auto flex-grow-1 container-fluid">
@@ -51,12 +70,31 @@ const PhotoAddEdit = () => {
                                         label="Title image"
                                         placeholder="Eg.."
                                     />
+                                    <div className="row">
+                                        <div className="col-12 col-sm-6">
+                                            <FastField
+                                                name="categoryId"
+                                                component={SelectField}
+                                                label="Category"
+                                                placeholder="Select category"
+                                                options={CATEGORIES}
+                                            />
+                                        </div>
+                                        <div className="col-12 col-sm-6">
+                                            <FastField
+                                                name="size"
+                                                component={SelectField}
+                                                label="Size"
+                                                placeholder="Select size"
+                                                options={SIZES}
+                                            />
+                                        </div>
+                                    </div>
                                     <FastField
-                                        name="category"
-                                        component={SelectField}
-                                        label="Category"
-                                        placeholder="Select category"
-                                        options={CATEGORIES}
+                                        name="imageUrl"
+                                        label="Photo"
+                                        component={RandomPhotoField}
+                                        options={options}
                                     />
                                 </div>
                                 <div className="border-top py-3 flex-center">

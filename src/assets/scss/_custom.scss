@@ -115,3 +115,14 @@ header {
 .list-circle {
     list-style: circle;
 }
+.photo-image {
+    img {
+        height: 15rem;
+        object-fit: cover;
+    }
+}
+.focus-none {
+    &:focus {
+        outline: none;
+    }
+}

@@ -3,12 +3,12 @@ import React from "react";
 const routes = [
     {
         path: "/photos",
-        component: React.lazy(() => import("./features/Photo/Photo")),
+        component: React.lazy(() => import("./views/Photo/Photo")),
         layout: "/admin",
     },
     {
         path: "/login",
-        component: React.lazy(() => import("./features/Login/Login")),
+        component: React.lazy(() => import("./views/Login/Login")),
         layout: "/auth",
     },
 ];

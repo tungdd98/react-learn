@@ -6,6 +6,8 @@ import {
     Switch,
     Redirect,
 } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "app/store";
 
 import DefaultLayout from "layouts/Default";
 import AuthLayout from "layouts/Auth";
@@ -13,14 +15,16 @@ import AuthLayout from "layouts/Auth";
 import "./assets/scss/main.scss";
 
 ReactDOM.render(
-    <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-                <Route path="/admin" component={DefaultLayout}></Route>
-                <Route path="/auth" component={AuthLayout}></Route>
-                <Redirect from="/" to="/admin/photos"></Redirect>
-            </Switch>
-        </Suspense>
-    </Router>,
+    <Provider store={store}>
+        <Router>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                    <Route path="/admin" component={DefaultLayout}></Route>
+                    <Route path="/auth" component={AuthLayout}></Route>
+                    <Redirect from="/" to="/admin/photos"></Redirect>
+                </Switch>
+            </Suspense>
+        </Router>
+    </Provider>,
     document.getElementById("root")
 );

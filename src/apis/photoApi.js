@@ -7,7 +7,15 @@ const PhotoApi = {
             const response = await axios.get(apis.photos, { params });
             return response;
         } catch (error) {
-            return error;
+            console.log(error);
+        }
+    },
+    uploadPhoto: async (data) => {
+        try {
+            const response = await axios.post(apis.photos, data);
+            return response;
+        } catch (error) {
+            console.log(error);
         }
     },
 };

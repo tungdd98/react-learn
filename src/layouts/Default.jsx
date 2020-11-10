@@ -1,6 +1,8 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import Loading from "components/Loading/Loading";
 import routes from "router";
+import { useSelector } from "react-redux";
 
 const switchRoutes = (
     <Switch>
@@ -21,7 +23,14 @@ const switchRoutes = (
 );
 
 const Default = () => {
-    return <div className="wrapper">{switchRoutes}</div>;
+    const isDisplayLoading = useSelector((state) => state.loading.display);
+    console.log(isDisplayLoading);
+    return (
+        <div className="wrapper">
+            {isDisplayLoading && <Loading />}
+            {switchRoutes}
+        </div>
+    );
 };
 
 export default Default;

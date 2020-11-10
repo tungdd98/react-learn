@@ -23,7 +23,11 @@ const SelectField = (props) => {
     };
     return (
         <FormGroup>
-            {label && <Label for={field.name}>{label}</Label>}
+            {label && (
+                <Label for={field.name} className="font-weight-600">
+                    {label}
+                </Label>
+            )}
             <Select
                 id={field.name}
                 {...field}
