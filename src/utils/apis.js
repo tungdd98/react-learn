@@ -1,5 +1,5 @@
 const apis = {
-    photos: "/photos",
+  photos: "/photos",
 };
 
 export default apis;
