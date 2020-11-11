@@ -127,3 +127,10 @@ header {
 .z-index {
   z-index: 10;
 }
+.auth-content {
+  max-width: 30rem;
+  width: 90%;
+}
+.mdl-button {
+  font-family: $font-family-base !important;
+}
