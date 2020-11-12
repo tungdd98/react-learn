@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import useWindowScroll from "@react-hook/window-scroll";
 import { NavLink } from "react-router-dom";
 import logo from "assets/logo.svg";
+import firebase from "utils/firebase";
+import { AuthContext } from "App";
 
 const Header = (props) => {
   const { showBg } = props;
   const scrollY = useWindowScroll(5);
+  const { user } = useContext(AuthContext);
   const setPropertyHeader = () => {
     if (!showBg) {
       return scrollY > 60 ? `bg-dark sticky-top` : `absolute-fluid`;
@@ -42,10 +45,22 @@ const Header = (props) => {
               Upload
             </NavLink>
           </li>
+          {user && (
+            <li className="px-3">
+              <span
+                className="cursor-pointer"
+                onClick={() => firebase.auth().signOut()}
+              >
+                Sign out
+              </span>
+            </li>
+          )}
         </ul>
-        <NavLink to="/login" className="btn btn-success font-weight-500">
-          Join
-        </NavLink>
+        {!user && (
+          <NavLink to="/login" className="btn btn-success font-weight-500">
+            Join
+          </NavLink>
+        )}
       </div>
     </header>
   );

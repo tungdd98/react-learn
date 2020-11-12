@@ -8,17 +8,21 @@ import PhotoApi from "apis/photoApi";
 
 const PhotoMain = () => {
   const [photos, setPhotos] = useState(null);
+  const [active, setActive] = useState(true);
+  const fetchData = async () => {
+    const data = await PhotoApi.getPhotos({
+      page: 1,
+      limit: 10,
+    });
+    if (data) {
+      setPhotos(data || []);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await PhotoApi.getPhotos({
-        page: 1,
-        limit: 10,
-      });
-      if (data) {
-        setPhotos(data || []);
-      }
+    active && fetchData();
+    return () => {
+      setActive(false);
     };
-    fetchData();
   }, []);
   return (
     <>

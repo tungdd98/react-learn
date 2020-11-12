@@ -1,5 +1,4 @@
 import axios from "axios";
-import firebase from "firebase";
 import { setLoading } from "components/Loading/loadingSlice";
 import store from "app/store";
 
@@ -11,40 +10,8 @@ const axiosClient = axios.create({
   },
 });
 
-const getFirebaseToken = async () => {
-  const currentUser = firebase.auth().currentUser;
-  if (currentUser) {
-    return currentUser.getIdToken();
-  }
-  // Not logged in
-  const hasRememberToken = window.localStorage.getItem("firebase-token");
-  if (!hasRememberToken) {
-    return null;
-  }
-  return new Promise((resolve, reject) => {
-    const waitTimer = setTimeout(() => {
-      reject(null);
-    }, 10000);
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged(async (user) => {
-        if (!user) {
-          reject(null);
-        }
-        const token = await user.getIdToken();
-        resolve(token);
-        unregisterAuthObserver();
-        clearTimeout(waitTimer);
-      });
-  });
-};
-
 const onRequest = async (config) => {
   store.dispatch(setLoading(true));
-  const token = await getFirebaseToken();
-  if (token) {
-    //config.headers.common.Authorization = `Bearer ${token}`;
-  }
   return config;
 };
 

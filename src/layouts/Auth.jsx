@@ -1,7 +1,6 @@
 import React from "react";
 
-const Auth = (props) => {
-  const { children } = props;
+const Auth = ({ children }) => {
   return <div className="wrapper min-vh-100 flex-center">{children}</div>;
 };
 

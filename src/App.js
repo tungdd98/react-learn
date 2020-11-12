@@ -1,55 +1,48 @@
-import React, { Suspense, useEffect, useState } from "react";
-import firebase from "firebase";
+import React, { Suspense, createContext, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Route,
   Redirect,
   Switch,
+  Route,
 } from "react-router-dom";
 import routes from "router";
+import firebase from "utils/firebase";
 
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_APP_DOMAIN,
-};
-firebase.initializeApp(config);
+export const AuthContext = createContext();
 
 const App = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const unregisterAuthObserver = firebase
       .auth()
-      .onAuthStateChanged(async (user) => {
-        if (!user) {
-          console.log("Not sign in");
-          return;
-        }
-        const token = await user.getIdToken();
-        window.localStorage.setItem("firebase-token", token);
-        setIsSignedIn(!!user);
-      });
-    return () => unregisterAuthObserver();
-  }, []);
+      .onAuthStateChanged((user) => setUser(user));
+    return () => {
+      unregisterAuthObserver();
+    };
+  }, [user]);
+
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Router>
-        <Switch>
-          {routes.map((route, i) => (
-            <Route
-              key={i}
-              path={route.path}
-              exact={route.exact}
-              render={(props) => (
-                <route.layout history={props.history}>
-                  <route.component {...props} />
-                </route.layout>
-              )}
-            ></Route>
-          ))}
-          <Redirect from="/" to="/photos"></Redirect>
-        </Switch>
-      </Router>
-    </Suspense>
+    <AuthContext.Provider value={{ user }}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router>
+          <Switch>
+            {routes.map((route, i) => (
+              <Route
+                key={i}
+                path={route.path}
+                exact={route.exact}
+                render={(props) => (
+                  <route.layout>
+                    <route.component {...props} />
+                  </route.layout>
+                )}
+              />
+            ))}
+            <Redirect from="/" to="/photos"></Redirect>
+          </Switch>
+        </Router>
+      </Suspense>
+    </AuthContext.Provider>
   );
 };
 

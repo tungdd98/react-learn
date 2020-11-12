@@ -1,4 +1,4 @@
-$fontSizes: (12, 14, 17, 18);
+$fontSizes: (10, 12, 14, 17, 18);
 @each $size in $fontSizes {
   .font-#{$size} {
     font-size: #{$size}px;
@@ -37,6 +37,9 @@ a {
   left: 0;
   right: 0;
   z-index: 1;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 header {
   min-height: 60px;

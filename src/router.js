@@ -17,9 +17,15 @@ const routes = [
     layout: Default,
   },
   {
-    exact: false,
+    exact: true,
     path: "/login",
-    component: React.lazy(() => import("./views/Login/Login")),
+    component: React.lazy(() => import("./views/Auth/pages/Login")),
+    layout: Auth,
+  },
+  {
+    exact: true,
+    path: "/register",
+    component: React.lazy(() => import("./views/Auth/pages/Register")),
     layout: Auth,
   },
 ];
